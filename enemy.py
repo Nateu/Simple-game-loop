@@ -1,26 +1,28 @@
 import random
+
 from maze import Maze
+
 
 class Enemy:
     ENEMY_SIZE = 8
     ENEMY_COLOR = (255, 0, 0)
-    
+
     def __init__(self, pygame, maze: Maze):
         self.pygame = pygame
         self.maze = maze
         self.is_alive = True
         self.x, self.y = self.maze.get_open_space()
         self.direction = (0, 0)
-        
+
     def move(self):
         if not self.is_alive:
             return
         while True:
-            (new_x, new_y) = self.select_new_location()            
+            (new_x, new_y) = self.select_new_location()
             if self.maze.is_open_space(new_x, new_y):
                 self.x = new_x
                 self.y = new_y
-                self.direction = (0,0)
+                self.direction = (0, 0)
                 return
 
     def select_new_location(self):
@@ -32,10 +34,10 @@ class Enemy:
 
     def rect(self):
         return self.pygame.Rect(
-            self.x * Maze.WALL_SIZE + (0.5 * (Maze.WALL_SIZE - self.ENEMY_SIZE)), 
+            self.x * Maze.WALL_SIZE + (0.5 * (Maze.WALL_SIZE - self.ENEMY_SIZE)),
             self.y * Maze.WALL_SIZE + (0.5 * (Maze.WALL_SIZE - self.ENEMY_SIZE)),
             self.ENEMY_SIZE,
-            self.ENEMY_SIZE
+            self.ENEMY_SIZE,
         )
 
     def draw(self, screen):
